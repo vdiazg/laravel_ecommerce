@@ -11,6 +11,18 @@
 |
 */
 
+/*
 Route::get('/', function () {
-    return view('welcome');
+return view('public.welcome');
 });
+*/
+Route::get('/', 'MainController@index');
+
+Route::resource('products', 'ProductsController');
+Route::get('products/{id}/destroy',[
+    'uses'  => 'ProductsController@destroy',
+    'as'    => 'products.destroy'
+  ]);
+
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
