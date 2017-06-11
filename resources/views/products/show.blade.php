@@ -11,9 +11,14 @@
 			<div class="row">
 				<div class="col-sm-6 col-xs-12"></div>
 				<div class="col-sm-6 col-xs-12">
-				<p><strong>Descripción</strong></p><br>
-				<p>{{ $product->description}}</p>
-				<p><a href="#" class="btn btn-success"> Agregar al Carrito</a></p>
+					<p><strong>Descripción</strong></p><br>
+					<p>{{ $product->description}}</p>
+					<p>
+						{!! Form::open(['url' => '/in_shopping_carts', 'method' => 'POST', 'class' => 'inline-block']) !!}
+						<input type="hidden" name="product_id" value="{{ $product->id }}">
+						<input type="submit" value="Agregar al Carrito" class="btn btn-info">
+						{!! Form::close() !!}
+					</p>
 				</div>
 			</div>
 		</div>

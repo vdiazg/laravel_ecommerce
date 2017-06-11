@@ -18,11 +18,20 @@ return view('public.welcome');
 */
 Route::get('/', 'MainController@index');
 
+Route::get('/carrito', 'ShoppingCartsController@index');
+
 Route::resource('products', 'ProductsController');
 Route::get('products/{id}/destroy',[
     'uses'  => 'ProductsController@destroy',
     'as'    => 'products.destroy'
   ]);
+
+Route::resource('in_shopping_carts', 'InShoppingCartController', [
+	'only' => ['store', 'destroy']
+]);
+
+
+
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
