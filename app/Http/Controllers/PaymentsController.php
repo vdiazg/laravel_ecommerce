@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\ShoppingCart;
 use Illuminate\Http\Request;
+use App\ShoppingCart;
 use App\PayPal;
 
-class ShoppingCartsController extends Controller
+class PaymentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +15,7 @@ class ShoppingCartsController extends Controller
      */
     public function index()
     {
-        $shopping_cart_id = \Session::get('shopping_cart_id');
-		
-		$shopping_cart = ShoppingCart::findOrCreateBySessionID($shopping_cart_id);
-		$paypal = new PayPal($shopping_cart);
-
-		$payment = $paypal->generate();
-		return redirect($payment->getApprovalLink());
-		//$products = $shopping_cart->products()->get();
-		//$total = $shopping_cart->total();
-		//return view('shopping_carts.index', ['products' => $products, 'total' => $total]);
+        //
     }
 
     /**
@@ -45,16 +36,21 @@ class ShoppingCartsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $shopping_cart_id = \Session::get('shopping_cart_id');
+		
+		$shopping_cart = ShoppingCart::findOrCreateBySessionID($shopping_cart_id);
+		$paypal = new PayPal($shopping_cart);
+
+		dd($paypal->execute($request->paymentId, $request->PayerID));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\ShoppingCart  $shoppingCart
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ShoppingCart $shoppingCart)
+    public function show($id)
     {
         //
     }
@@ -62,10 +58,10 @@ class ShoppingCartsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ShoppingCart  $shoppingCart
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ShoppingCart $shoppingCart)
+    public function edit($id)
     {
         //
     }
@@ -74,10 +70,10 @@ class ShoppingCartsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ShoppingCart  $shoppingCart
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ShoppingCart $shoppingCart)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -85,10 +81,10 @@ class ShoppingCartsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ShoppingCart  $shoppingCart
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ShoppingCart $shoppingCart)
+    public function destroy($id)
     {
         //
     }

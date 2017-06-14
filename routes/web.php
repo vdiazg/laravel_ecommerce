@@ -19,6 +19,7 @@ return view('public.welcome');
 Route::get('/', 'MainController@index');
 
 Route::get('/carrito', 'ShoppingCartsController@index');
+Route::get('/payment/store', 'PaymentsController@store');
 
 Route::resource('products', 'ProductsController');
 Route::get('products/{id}/destroy',[
