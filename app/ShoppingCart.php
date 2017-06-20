@@ -8,12 +8,30 @@ class ShoppingCart extends Model
 {
 	protected $fillable = ['status'];
 	
+	public function approved(){
+		$this->generateCustomIDAndStatus();
+	}
+	
+	public function generateCustomID(){
+		return md5("$this->id $this->update_at");
+	}
+	
+	public function generateCustomIDAndStatus(){
+		$this->status = 'approved';
+		$this->customid = $this->generateCustomID();
+		$this->save();
+	}
+	
 	public function InShoppingCart(){
 		return $this->hasMany("App\InShoppingCart");
 	}
 	
 	public function products(){
 		return $this->belongsToMany('App\Product', 'in_shopping_carts');
+	}
+	
+	public function order(){
+		return $this->hasOne('App\Order')->first();
 	}
 	
 	public function productsSize(){

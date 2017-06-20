@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\PayPal;
 
 class ShoppingCartsController extends Controller
-{
+{	
     /**
      * Display a listing of the resource.
      *
@@ -54,9 +54,11 @@ class ShoppingCartsController extends Controller
      * @param  \App\ShoppingCart  $shoppingCart
      * @return \Illuminate\Http\Response
      */
-    public function show(ShoppingCart $shoppingCart)
+    public function show($id)
     {
-        //
+        $shopping_cart = ShoppingCart::where('customid', $id)->first();
+		$order = $shopping_cart->order();
+		return view('shopping_carts.completed', ['shopping_cart' => $shopping_cart, 'order' => $order] );
     }
 
     /**

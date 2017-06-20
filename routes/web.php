@@ -31,8 +31,13 @@ Route::resource('in_shopping_carts', 'InShoppingCartController', [
 	'only' => ['store', 'destroy']
 ]);
 
+Route::resource('compras', 'ShoppingCartsController', [
+	'only' => ['show']
+]);
 
-
+Route::resource('orders', 'OrdersController', [
+	'only' => ['index', 'update']
+]);
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
