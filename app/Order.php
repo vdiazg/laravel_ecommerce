@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support \Facades\Mail;
+use App\Mail\OrderCreated;
+use App\Mail\OrderUpdated;
 
 class Order extends Model
 {
@@ -21,6 +24,21 @@ class Order extends Model
 		'total', 
 		'guide_number'	
 	];
+	
+	public function sendMail()
+	{
+		Mail::to('vdiaz@edoome.com')->send(new OrderCreated($this));
+	}
+
+	public function sendUpdateMail()
+	{
+		Mail::to('vdiaz@edoome.com')->send(new OrderUpdated($this));
+	}
+
+	public function shoppingCartID()
+	{
+		return $this->shopping_cart->customid;
+	}
 	
 	public function scopeLatest($query)
 	{	
@@ -44,7 +62,12 @@ class Order extends Model
 	{
 		return Order::monthly()->sum('total') / 100;
 	}
-	
+		
+	public function shopping_cart()
+	{
+		return $this->belongsTo('App\ShoppingCart');
+	}
+
 	public static function totalMonthCount()
 	{
 		return Order::monthly()->count();

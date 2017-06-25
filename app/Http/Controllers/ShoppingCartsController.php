@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\ShoppingCart;
 use Illuminate\Http\Request;
 use App\PayPal;
+use App\Mail\OrderCreated;
+use Illuminate\Support\Facades\Mail;
+use App\Order;
 
 class ShoppingCartsController extends Controller
 {	
@@ -21,9 +24,9 @@ class ShoppingCartsController extends Controller
 	{
 		$shopping_cart = $request->shopping_cart;
 		
-		//$paypal = new PayPal($shopping_cart);
-		//$payment = $paypal->generate();
-		//return redirect($payment->getApprovalLink());
+		$paypal = new PayPal($shopping_cart);
+		$payment = $paypal->generate();
+		return redirect($payment->getApprovalLink());
 		$products = $shopping_cart->products()->get();
 		$total = $shopping_cart->total();
 		return view('shopping_carts.index', ['products' => $products, 'total' => $total]);

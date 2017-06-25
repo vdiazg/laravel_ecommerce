@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use App\Order;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -26,7 +27,12 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
+		Order::created(function ($order){
+			$order->sendMail();
+		});
+        Order::updated(function ($order){
+			$order->sendUpdateMail();
+		});
+        
     }
 }
