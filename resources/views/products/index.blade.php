@@ -23,6 +23,7 @@
 					<td>{{ $product->description }}</td>
 					<td>{{ $product->pricing }}</td>
 					<td>
+						<a href="{{ url('/products/'.$product->id) }}" class="btn btn-warning btn-sm">Ver</a> 
           				<a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-wrench"></span></a> 
           				<a href="{{ route('products.destroy', $product->id) }}" onclick="return confirm('¿Seguro que deaseas eliminarlo?')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
 					</td>

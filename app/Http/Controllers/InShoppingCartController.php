@@ -8,10 +8,10 @@ use App\ShoppingCart;
 
 class InShoppingCartController extends Controller
 {
-public function __construct()
-{
-	$this->middleware('shoppingcart');
-}
+	public function __construct()
+	{
+		$this->middleware('shoppingcart');
+	}
 	/**
 	* Store a newly created resource in storage.
 	*
@@ -26,7 +26,12 @@ public function __construct()
 			'shopping_cart_id' 	=>	$shopping_cart->id,
 			'product_id'		=>	$request->product_id
 		]);
-		
+		if($request->ajax())
+		{
+			return response()->json([
+				'products_count' => InShoppingCart::productCount($shopping_cart->id)
+			]);
+		}
 		if(false){
 			return redirect('/in_shopping_carts');;
 		}else{
